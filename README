@@ -1,0 +1,97 @@
+Project STL-TREE  Templates, and Iterators
+
+Overview
+--------
+
+This project implements classes for handling complex numbers (Complex), creating hierarchical tree structures (Node and Tree), and visualizing tree data using SFML graphics.
+
+Classes Included
+----------------
+
+1. Complex
+   - Represents a complex number with real and imaginary parts.
+   - Provides arithmetic operations (+), comparison operators (<, ==), and output streaming.
+   - Includes getters and setters for real and imaginary parts.
+
+2. Node<T>
+   - Template class representing a node in a tree structure.
+   - Stores a value of type T and manages child nodes.
+   - Supports basic operations like adding root and child nodes, finding nodes, and tree traversal.
+   - Provides methods for accessing node values and managing child nodes.
+
+3. Tree<T, order>
+   - Template class managing a hierarchical tree structure of nodes.
+   - Supports various traversal methods (pre-order, post-order, in-order, BFS, DFS).
+   - Includes methods for adding nodes, converting to a min-heap, and SFML-based visualization.
+   - Provides iterators for traversing nodes and accessing tree data.
+
+Usage
+-----
+
+To use the classes in your project:
+
+1. Include Headers
+   - Include "Complex.hpp", "Node.hpp", and "Tree.hpp" in your source files.
+
+2. Create Objects
+   - Complex: Instantiate Complex objects for complex number operations.
+   - Node and Tree: Create Node and Tree objects to manage hierarchical data.
+
+3. Manipulate and Visualize Data
+   - Use provided methods to add nodes, perform tree traversals, and visualize the tree structure using SFML.
+
+Dependencies
+------------
+
+- SFML: Simple and Fast Multimedia Library for graphical rendering.
+
+Function Details
+----------------
+
+Complex class:
+- Complex(double r = 0, double i = 0): Constructor for initializing real and imaginary parts.
+- double getReal() const: Getter for the real part of the complex number.
+- void setReal(double r): Setter for the real part of the complex number.
+- double getImag() const: Getter for the imaginary part of the complex number.
+- void setImag(double i): Setter for the imaginary part of the complex number.
+- Complex operator+(const Complex& other) const: Overloads + operator for adding two Complex numbers.
+- bool operator<(const Complex& other) const: Overloads < operator for comparing two Complex numbers.
+- bool operator==(const Complex& other) const: Overloads == operator for checking equality of two Complex numbers.
+- friend ostream& operator<<(ostream& out, const Complex& c): Overloads << operator for printing Complex numbers.
+
+Node class:
+- Node(T val): Constructor to initialize the node with a value.
+- ~Node(): Destructor for the Node class.
+- T get_value() const: Getter function to retrieve the value stored in the node.
+
+Tree class:
+- Tree(): Constructor for initializing an empty tree.
+- ~Tree(): Destructor for cleaning up tree memory.
+- void draw_tree(sf::RenderWindow& window, Tree<T, order>& tree, Node<T>* node, int x, int y, int horizontal_gap, sf::Font& font): Draw the tree structure on an SFML window.
+- void handle_window(): Handle events in the SFML window and display the tree structure.
+- void add_root(const Node<T>& node): Add a root node to the tree.
+- void add_sub_node(const Node<T>& parent_node, const Node<T>& child_node): Add a child node to a parent node in the tree.
+- Node<T>* find_node(Node<T>* current, T value): Find a node in the tree by its value.
+- Node<T>* get_root() const: Get the root node of the tree.
+- void delete_tree(Node<T>* node): Delete the entire tree starting from a given node.
+- void myHeap(): Convert the tree into a min-heap structure.
+- Tree<T, order>::Iterator begin_pre_order(): Get an iterator pointing to the beginning of pre-order traversal.
+- Tree<T, order>::Iterator end_pre_order(): Get an iterator pointing to the end of pre-order traversal.
+- Tree<T, order>::Iterator begin_post_order(): Get an iterator pointing to the beginning of post-order traversal.
+- Tree<T, order>::Iterator end_post_order(): Get an iterator pointing to the end of post-order traversal.
+- Tree<T, order>::Iterator begin_in_order(): Get an iterator pointing to the beginning of in-order traversal.
+- Tree<T, order>::Iterator end_in_order(): Get an iterator pointing to the end of in-order traversal.
+- Tree<T, order>::Iterator begin_bfs_scan(): Get an iterator pointing to the beginning of BFS traversal.
+- Tree<T, order>::Iterator end_bfs_scan(): Get an iterator pointing to the end of BFS traversal.
+- Tree<T, order>::Iterator begin_dfs_scan(): Get an iterator pointing to the beginning of DFS traversal.
+- Tree<T, order>::Iterator end_dfs_scan(): Get an iterator pointing to the end of DFS traversal.
+- Tree<T, order>::Iterator begin_heap(): Get an iterator pointing to the beginning of min-heap traversal.
+- Tree<T, order>::Iterator end_heap(): Get an iterator pointing to the end of min-heap traversal.
+
+Author
+------
+
+hagit dahan
+315158568
+hagitdahan101@gmail.com
+

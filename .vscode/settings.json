@@ -1,0 +1,17 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/hagit/Desktop/Ex4_SP",
+            "binaryPath": "/home/hagit/Desktop/Ex4_SP/main",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "/home/hagit/Desktop/Ex4_SP",
+            "binaryPath": "/home/hagit/Desktop/Ex4_SP/tree",
+            "binaryArgs": []
+        }
+    ],
+    "files.associations": {
+        "string": "cpp"
+    }
+}
