@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 /**
@@ -57,7 +58,8 @@ public:
      * @return true if the current Complex number is less than the other, false otherwise.
      */
     bool operator < (const Complex& other) const {
-        return this->real < other.real && this->imag < other.imag;
+        //return this->real < other.real && this->imag < other.imag;
+        return std::sqrt(real * real + imag * imag) < std::sqrt(other.real * other.real + other.imag * other.imag);
     }
     /**
      * @brief Overload the == operator to check equality of two Complex numbers.

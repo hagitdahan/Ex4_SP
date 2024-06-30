@@ -22,14 +22,14 @@ private:
     void pre_order(Node<T>* node, std::vector<Node<T>*>& nodes) {
         if (!node) return;
         nodes.push_back(node);
-        for (Node<T>* child : node->children) {
+        for (Node<T>* child : node->getChildrens()) {
             pre_order(child, nodes);
         }
     }
     //function that get the first node and insert the nodes in the tree to pre_order vector
     void post_order(Node<T>* node, std::vector<Node<T>*>& nodes) {
         if (!node) return;
-        for (Node<T>* child : node->children) {
+        for (Node<T>* child : node->getChildrens()) {
             post_order(child, nodes);
         }
         nodes.push_back(node);
@@ -37,12 +37,12 @@ private:
     //function that get the first node and insert the nodes in the tree to pre_order vector
     void in_order(Node<T>* node, std::vector<Node<T>*>& nodes) {
         if (!node) return;
-        if (!node->children.empty()) {
-            in_order(node->children[0], nodes);
+        if (!node->getChildrens().empty()) {
+            in_order(node->getChildrens().at(0), nodes);
         }
         nodes.push_back(node);
-        for (size_t i = 1; i < node->children.size(); ++i) {
-            in_order(node->children[i], nodes);
+        for (size_t i = 1; i < node->getChildrens().size(); ++i) {
+            in_order(node->getChildrens().at(i), nodes);
         }
     }
     //function that get the first node and insert the nodes in the tree to pre_order vector
@@ -54,40 +54,42 @@ private:
             Node<T>* current = queue.front();
             queue.pop();
             nodes.push_back(current);
-            for (Node<T>* child : current->children) {
+            for (Node<T>* child : current->getChildrens()) {
                 queue.push(child);
             }
         }
     }
     //function that get the first node and insert the nodes in the tree to pre_order vector
     void dfs(Node<T>* node, std::vector<Node<T>*>& nodes) {
-        if (!node) return;
-        std::stack<Node<T>*> stack;
-        stack.push(node);
-        while (!stack.empty()) {
-            Node<T>* current = stack.top();
-            stack.pop();
-            nodes.push_back(current);
-            for (auto it = current->children.rbegin(); it != current->children.rend(); ++it) {
-                stack.push(*it);
-            }
+    if (!node) return;
+    std::stack<Node<T>*> stack;
+    stack.push(node);
+    while (!stack.empty()) {
+        Node<T>* current = stack.top();
+        stack.pop();
+        nodes.push_back(current);
+        
+        // Store the reference to the children's vector
+        const auto& children = current->getChildrens();
+        for (auto it = children.rbegin(); it != children.rend(); ++it) {
+            stack.push(*it);
         }
     }
+}
     // Heapify method to maintain min-heap property
     void heapify(Node<T>* node) {
         if (!node) return;
         Node<T>* smallest = node;
-        for (Node<T>* child : node->children) {
-            if (child && child->value < smallest->value) {
+        for (Node<T>* child : node->getChildrens()) {
+            if (child && child->get_value() < smallest->get_value()) {
                 smallest = child;
             }
         }
         if (smallest != node) {
-            std::swap(node->value, smallest->value);
+            std::swap(node->get_value(), smallest->get_value());
             heapify(smallest);
         }
     }
-
 public:
     /**
      * @brief Constructor for Tree class.
@@ -114,7 +116,7 @@ public:
          if (!node) return;
 
         // Drawing circle and lines...
-        sf::Color circleColor = sf::Color::Blue; // Red color for circles
+        sf::Color circleColor = sf::Color::Cyan; // Red color for circles
         sf::Color outlineColor = sf::Color::Black; // Black color for circle outline
         sf::Color textColor = sf::Color::Black; // Black color for text
 
@@ -127,7 +129,7 @@ public:
         window.draw(circle);
 
         // Convert value to string with fixed precision
-        T value = node->value;
+        T value = node->get_value();
         std::ostringstream oss;
         oss.precision(1);
         oss << std::fixed << value;
@@ -142,8 +144,8 @@ public:
         textObject.setPosition(x + circle.getRadius(), y + circle.getRadius());
         window.draw(textObject);
 
-        // Draw lines to children
-        auto children = node->children;
+        //Draw lines to children
+        auto children = node->getChildrens();
         int num_children = children.size();
         if (num_children > 0) {
             for (int i = 0; i < num_children; ++i) {
@@ -203,10 +205,11 @@ public:
      * @throws std::runtime_error if max children exceeded for parent node or parent node not found.
      */
     void add_sub_node(const Node<T>& parent_node, const Node<T>& child_node) {
-        Node<T>* parent = find_node(root, parent_node.value);
+        Node<T>* parent = find_node(root, parent_node.get_value());
         if (parent) {
-            if (parent->children.size() < order) {
-                parent->children.push_back(new Node<T>(child_node));
+            if (parent->getChildrens().size() < order) {
+                //parent->getChildrens().push_back(new Node<T>(child_node));
+                parent->addChildren(child_node);
             } else {
                 throw std::runtime_error("Max children exceeded for parent node.");
             }
@@ -223,8 +226,8 @@ public:
      */
     Node<T>* find_node(Node<T>* current, T value) {
         if (!current) return nullptr;
-        if (current->value == value) return current;
-        for (Node<T>* child : current->children) {
+        if (current->get_value() == value) return current;
+        for (Node<T>* child : current->getChildrens()) {
             Node<T>* result = find_node(child, value);
             if (result) return result;
         }
@@ -381,7 +384,7 @@ public:
      */
     void delete_tree(Node<T>* node) {
         if (!node) return;
-        for (Node<T>* child : node->children) {
+        for (Node<T>* child : node->getChildrens()) {
             delete_tree(child);
         }
         delete node;
@@ -396,7 +399,7 @@ public:
 
         // Custom comparator lambda for Node values
         auto node_value_comparator = [](Node<T>* a, Node<T>* b) {
-        return a->value < b->value; // Min-heap: smallest value at the top
+        return a->get_value() < b->get_value(); // Min-heap: smallest value at the top
         };
 
         // Convert values to a min-heap

@@ -11,14 +11,13 @@
 template <typename T>
 class Node {
 public:
-    T value;
-    std::vector<Node<T>*> children;
+    //explicit Node(T value){}
     /**
      * @brief Constructor to initialize the node with a value.
      * 
      * @param val The value to be stored in the node.
      */
-    Node(T val) : value(val) {}
+    explicit Node(T val) : value(val) {}
     /**
      * @brief Destructor for the Node class.
      * 
@@ -32,6 +31,18 @@ public:
      * @return The value stored in the node.
      */
     T get_value() const { return value; }
+     /**
+     * @brief Getter function to retrieve the childrens of the node.
+     * 
+     * @return The value stored in the node.
+     */
+    std::vector<Node<T>*>&getChildrens(){return childrens;}
+    void addChildren(const Node<T>& newNode){childrens.push_back(new Node<T>(newNode));}
+private:
+    T value;
+    std::vector<Node<T>*> childrens;
+
 };
+
 
 #endif // NODE_HPP

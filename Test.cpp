@@ -10,20 +10,20 @@ TEST_CASE("Node creation and basic functionality") {
     //int example
     Node<int> node(5);
     CHECK(node.get_value() == 5);
-    CHECK(node.children.empty());
+    CHECK(node.getChildrens().empty());
     //string example
     Node<string> node2("hagit");
     CHECK(node2.get_value() == "hagit");
-    CHECK(node2.children.empty());
+    CHECK(node2.getChildrens().empty());
     //double example
     Node<double> node3(2.178);
     CHECK(node3.get_value() == 2.178);
-    CHECK(node3.children.empty());
+    CHECK(node3.getChildrens().empty());
     //complex example
     Node<Complex> node4(Complex(2,1));
     CHECK(node4.get_value().getImag() ==1) ;
     CHECK(node4.get_value().getReal() == 2);
-    CHECK(node4.children.empty());
+    CHECK(node4.getChildrens().empty());
 }
 
 // Test Tree creation, adding root and adding sub nodes
@@ -38,9 +38,9 @@ TEST_CASE("Tree creation, adding root and sub nodes") {
     tree.add_sub_node(root_node, child1);
     tree.add_sub_node(root_node, child2);
 
-    CHECK(tree.get_root()->children.size() == 2);
-    CHECK(tree.get_root()->children[0]->get_value() == 2);
-    CHECK(tree.get_root()->children[1]->get_value() == 3);
+    CHECK(tree.get_root()->getChildrens().size() == 2);
+    CHECK(tree.get_root()->getChildrens().at(0)->get_value() == 2);
+    CHECK(tree.get_root()->getChildrens().at(1)->get_value() == 3);
 }
 
 //Test Tree traversal methods
@@ -191,10 +191,10 @@ TEST_CASE("Tree creation, adding root and sub nodes") {
     CHECK_THROWS( tree.add_sub_node(root_node, child4));
     
 
-    CHECK(tree.get_root()->children.size() == 3);
-    CHECK(tree.get_root()->children[0]->get_value() == "child1");
-    CHECK(tree.get_root()->children[1]->get_value() == "child2");
-    CHECK(tree.get_root()->children[2]->get_value() == "child3");
+    CHECK(tree.get_root()->getChildrens().size() == 3);
+    CHECK(tree.get_root()->getChildrens().at(0)->get_value() == "child1");
+    CHECK(tree.get_root()->getChildrens().at(1)->get_value() == "child2");
+    CHECK(tree.get_root()->getChildrens().at(2)->get_value() == "child3");
 }
 
 // Test DFS traversal in a tree with int values
@@ -281,7 +281,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<int> expected = {10, 5, 3, 7, 15, 13, 17};
         std::vector<int> result;
         for (auto it = tree_int.begin_pre_order(); it != tree_int.end_pre_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -290,7 +290,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<int> expected = {3, 5, 7, 10, 13, 15, 17};
         std::vector<int> result;
         for (auto it = tree_int.begin_in_order(); it != tree_int.end_in_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -299,7 +299,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<int> expected = {3, 7, 5, 13, 17, 15, 10};
         std::vector<int> result;
         for (auto it = tree_int.begin_post_order(); it != tree_int.end_post_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -308,7 +308,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<int> expected = {10, 5, 3, 7, 15, 13, 17};
         std::vector<int> result;
         for (auto it = tree_int.begin_dfs_scan(); it != tree_int.end_dfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -317,7 +317,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<int> expected = {10, 5, 15, 3, 7, 13, 17};
         std::vector<int> result;
         for (auto it = tree_int.begin_bfs_scan(); it != tree_int.end_bfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -336,7 +336,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<double> expected = {10.5, 5.3, 3.1, 7.8, 15.2, 13.6, 17.4};
         std::vector<double> result;
         for (auto it = tree_double.begin_pre_order(); it != tree_double.end_pre_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -345,7 +345,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<double> expected = {3.1, 5.3, 7.8, 10.5, 13.6, 15.2, 17.4};
         std::vector<double> result;
         for (auto it = tree_double.begin_in_order(); it != tree_double.end_in_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -354,7 +354,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<double> expected = {3.1, 7.8, 5.3, 13.6, 17.4, 15.2, 10.5};
         std::vector<double> result;
         for (auto it = tree_double.begin_post_order(); it != tree_double.end_post_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -363,7 +363,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<double> expected = {10.5, 5.3, 3.1, 7.8, 15.2, 13.6, 17.4};
         std::vector<double> result;
         for (auto it = tree_double.begin_dfs_scan(); it != tree_double.end_dfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -372,7 +372,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<double> expected = {10.5, 5.3, 15.2, 3.1, 7.8, 13.6, 17.4};
         std::vector<double> result;
         for (auto it = tree_double.begin_bfs_scan(); it != tree_double.end_bfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -387,7 +387,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<std::string> expected = {"mango", "apple", "banana"};
         std::vector<std::string> result;
         for (auto it = tree_string.begin_pre_order(); it != tree_string.end_pre_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -396,7 +396,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<std::string> expected = {"apple", "mango", "banana"};
         std::vector<std::string> result;
         for (auto it = tree_string.begin_in_order(); it != tree_string.end_in_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -405,7 +405,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<std::string> expected = {"apple", "banana", "mango"};
         std::vector<std::string> result;
         for (auto it = tree_string.begin_post_order(); it != tree_string.end_post_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -414,7 +414,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<std::string> expected = {"mango", "apple", "banana"};
         std::vector<std::string> result;
         for (auto it = tree_string.begin_dfs_scan(); it != tree_string.end_dfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -423,7 +423,7 @@ TEST_CASE("Tree Iterators") {
         std::vector<std::string> expected = {"mango", "apple", "banana"};
         std::vector<std::string> result;
         for (auto it = tree_string.begin_bfs_scan(); it != tree_string.end_bfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -439,7 +439,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(1.0, 2.0), Complex(3.0, 4.0), Complex(5.0, 6.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_pre_order(); it != tree_complex.end_pre_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -448,7 +448,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(3.0, 4.0), Complex(5.0, 6.0), Complex(1.0, 2.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_post_order(); it != tree_complex.end_post_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -457,7 +457,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(3.0, 4.0), Complex(1.0, 2.0), Complex(5.0, 6.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_in_order(); it != tree_complex.end_in_order(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -466,7 +466,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(1.0, 2.0), Complex(3.0, 4.0), Complex(5.0, 6.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_bfs_scan(); it != tree_complex.end_bfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -475,7 +475,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(1.0, 2.0), Complex(3.0, 4.0), Complex(5.0, 6.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_dfs_scan(); it != tree_complex.end_dfs_scan(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -484,7 +484,7 @@ TEST_CASE("Tree Traversal Tests - Complex") {
         std::vector<Complex> expected = {Complex(1.0, 2.0),Complex(3.0, 4.0), Complex(5.0, 6.0)};
         std::vector<Complex> result;
         for (auto it = tree_complex.begin_heap(); it != tree_complex.end_heap(); ++it) {
-            result.push_back(it->value);
+            result.push_back(it->get_value());
         }
         CHECK(result == expected);
     }
@@ -507,7 +507,7 @@ TEST_CASE("Heap Iterator") {
     std::vector<int> result_heap;
 
     for (auto it = tree.begin_heap(); it != tree.end_heap(); ++it) {
-        result_heap.push_back(it->value);
+        result_heap.push_back(it->get_value());
     }
 
     CHECK(result_heap == expected_heap);

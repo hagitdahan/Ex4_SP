@@ -1,7 +1,7 @@
 CXX = clang++
 CXXFLAGS = -std=c++2a -Wall -g
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-#VALGRIND_FLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --error-exitcode=99
+VALGRIND_FLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --error-exitcode=99
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 
 SRCS = Demo.cpp 
